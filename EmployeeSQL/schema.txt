@@ -1,0 +1,51 @@
+Salaries
+-
+emp_no INTEGER PK
+salary INT
+from_data DATE
+to_date DATE
+
+
+Employees
+-
+emp_no INTEGER PK
+birth_date DATE
+first_name VARCHAR
+last_name VARCHAR
+gender VARCHAR
+hire_date DATE
+
+Titles
+-
+emp_no INTEGER PK
+title VARCHAR
+from_date DATE
+to_date DATE
+
+Dept_Manager
+-
+dept_no INTEGER PK
+emp_no INTEGER 
+from_date DATE
+to_date DATE 
+
+Dept_Emp
+-
+emp_no INTEGER 
+dept_no VARCHAR PK
+from_date DATE
+to_date DATE 
+
+Departments 
+-
+dept_no VARCHAR PK
+dept_name VARCHAR 
+
+
+
+
+
+
+
+
+

@@ -1,81 +1,48 @@
--- Exported from QuickDBD: https://www.quickdatabasediagrams.com/
-
---Create Tables--
-CREATE TABLE "Salaries" (
-    "emp_no" INT   NOT NULL,
-    "salary" INT   NOT NULL,
-    "from_data" DATE   NOT NULL,
-    "to_date" DATE   NOT NULL,
-    CONSTRAINT "pk_Salaries" PRIMARY KEY (
-        "emp_no"
-     )
+  
+CREATE TABLE departments (
+    dept_no varchar(8) PRIMARY KEY ,
+    dept_name varchar(32)   NOT NULL
 );
 
-CREATE TABLE "Employees" (
-    "emp_no" INT   NOT NULL,
-    "birth_date" DATE   NOT NULL,
-    "first_name" VARCHAR   NOT NULL,
-    "last_name" VARCHAR   NOT NULL,
-    "gender" VARCHAR   NOT NULL,
-    "hire_date" DATE   NOT NULL,
-    CONSTRAINT "pk_Employees" PRIMARY KEY (
-        "emp_no"
-     )
+CREATE TABLE employees (
+    emp_no Integer PRIMARY KEY ,
+    birth_date date   NOT NULL,
+    first_name varchar(64)   NOT NULL,
+    last_name varchar(64)   NOT NULL,
+    gender char   NOT NULL,
+    hire_date date   NOT NULL
 );
 
-CREATE TABLE "Titles" (
-    "emp_no" INT   NOT NULL,
-    "title" VARCHAR   NOT NULL,
-    "from_date" DATE   NOT NULL,
-    "to_date" DATE   NOT NULL,
-    CONSTRAINT "pk_Titles" PRIMARY KEY (
-        "emp_no"
-     )
+CREATE TABLE dept_manager (
+	dept_no varchar(8),
+    FOREIGN KEY (dept_no) REFERENCES departments (dept_no),
+	emp_no Integer,
+    FOREIGN KEY (emp_no) REFERENCES  employees (emp_no),
+    from_date date   NOT NULL,
+    to_date date   NOT NULL
 );
 
-CREATE TABLE "Dept_Manager" (
-    "dept_no" VARCHAR   NOT NULL,
-    "emp_no" INT   NOT NULL,
-    "from_date" DATE   NOT NULL,
-    "to_date" DATE   NOT NULL,
-    CONSTRAINT "pk_Dept_Manager" PRIMARY KEY (
-        "dept_no"
-     )
+CREATE TABLE dept_employees (
+	emp_no Integer,
+    FOREIGN KEY (emp_no) REFERENCES  employees (emp_no),
+    dept_no varchar(8),
+	FOREIGN KEY (dept_no) REFERENCES departments (dept_no),
+    from_date date   NOT NULL,
+    to_date date   NOT NULL
 );
 
-CREATE TABLE "Dept_Emp" (
-    "emp_no" INT   NOT NULL,
-    "dept_no" VARCHAR   NOT NULL,
-    "from_date" DATE   NOT NULL,
-    "to_date" DATE   NOT NULL,
-    CONSTRAINT "pk_Dept_Emp" PRIMARY KEY (
-        "emp_no"
-     )
+CREATE TABLE salaries (
+    emp_no Integer ,
+	FOREIGN KEY (emp_no) REFERENCES  employees (emp_no),
+    salary Integer   NOT NULL,
+    from_date date   NOT NULL,
+    to_date date   NOT NULL
 );
 
-CREATE TABLE "Departments" (
-    "dept_no" VARCHAR   NOT NULL,
-    "dept_name" VARCHAR   NOT NULL,
-    CONSTRAINT "pk_Departments" PRIMARY KEY (
-        "dept_no"
-     )
+CREATE TABLE titles (
+    emp_no Integer,
+	FOREIGN KEY (emp_no) REFERENCES  employees (emp_no),
+    title varchar(64)   NOT NULL,
+    from_date date   NOT NULL,
+    to_date date   NOT NULL
 );
-
-ALTER TABLE "Salaries" ADD CONSTRAINT "fk_Salaries_emp_no" FOREIGN KEY("emp_no")
-REFERENCES "Employees" ("emp_no");
-
-ALTER TABLE "Titles" ADD CONSTRAINT "fk_Titles_emp_no" FOREIGN KEY("emp_no")
-REFERENCES "Employees" ("emp_no");
-
-ALTER TABLE "Dept_Manager" ADD CONSTRAINT "fk_Dept_Manager_emp_no" FOREIGN KEY("emp_no")
-REFERENCES "Employees" ("emp_no");
-
-ALTER TABLE "Dept_Emp" ADD CONSTRAINT "fk_Dept_Emp_emp_no" FOREIGN KEY("emp_no")
-REFERENCES "Employees" ("emp_no");
-
-ALTER TABLE "Dept_Emp" ADD CONSTRAINT "fk_Dept_Emp_dept_no" FOREIGN KEY("dept_no")
-REFERENCES "Departments" ("dept_no");
-
-ALTER TABLE "Departments" ADD CONSTRAINT "fk_Departments_dept_no" FOREIGN KEY("dept_no")
-REFERENCES "Dept_Manager" ("dept_no");
-
